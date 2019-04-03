@@ -45,11 +45,7 @@ function! Get_random_colo(tag)
 	silent! python cololib.cmd_get_random_colo(csdata, vim.eval('a:tag'))
 	redir END
 
-	if (v:version >= 800 || has('nvim'))
-		let out = trim(out)
-	else
-		let out = substitute(out, '^\s*\(.\{-}\)\s*$', '\1', '')
-	endif
+	let out = substitute(out, '^\s*\(.\{-}\)\s*$', '\1', '')
 
 	exec 'colo ' . out
 endfunction

@@ -17,7 +17,7 @@ def _find_all_color_dirs(base):
     return list(results)
 
 # TODO maybe replace with a dict?
-class ColourScheme:
+class ColorScheme:
     def __init__(self, name='', path='', variants=[], defaultVariant=None, tags=[]):
         self.name = name
 
@@ -33,18 +33,18 @@ class ColourScheme:
 class CSData:
     """ Basically the data structure we're going to read in and out of JSON """
 
-    def __init__(self, path, colourSchemes = [], caches={'all': [], 'whitelist': [], 'blacklist': []}):
+    def __init__(self, path, colorSchemes = [], caches={'all': [], 'whitelist': [], 'blacklist': []}):
         self.path = path
-        self.colourSchemes = colourSchemes
+        self.colorSchemes = colorSchemes
         self.caches        = caches
 
     def has(self, name):
         """ Check if we have a colourscheme by 'name' """
-        return any(s.name == name for s in self.colourSchemes)
+        return any(s.name == name for s in self.colorSchemes)
 
     def find(self, name):
         """ Check if we have a colourscheme by 'name' """
-        for idx, s in enumerate(self.colourSchemes):
+        for idx, s in enumerate(self.colorSchemes):
             if s.name == name:
                 return idx
 
@@ -138,17 +138,17 @@ def cmd_build_cache(data, search_path, verbose=True, dryrun=False):
                 rel_dir = re.sub(r'^(\\|/)?', '', rel_dir)
                 if data.has(name=name):
                     idx = data.find(name=name)
-                    if data.colourSchemes[idx].path != rel_dir:
-                        data.colourSchemes[idx].path = rel_dir
+                    if data.colorSchemes[idx].path != rel_dir:
+                        data.colorSchemes[idx].path = rel_dir
                 else:
-                    data.colourSchemes.append(ColourScheme(
+                    data.colorSchemes.append(ColorScheme(
                         name=name,
                         path=rel_dir,
                     ))
 
     # Build cache
     all_tags = set()
-    for s in data.colourSchemes:
+    for s in data.colorSchemes:
         for t in s.tags:
             all_tags.add(t)
         if s.name not in data.caches['all']:
@@ -160,7 +160,7 @@ def cmd_build_cache(data, search_path, verbose=True, dryrun=False):
     for t in all_tags:
         if t not in data.caches:
             data.caches[t] = []
-        for s in data.colourSchemes:
+        for s in data.colorSchemes:
             # Add to our tag caches if it's missing
             if t in s.tags and s.name not in data.caches[t]:
                 data.caches[t].append(s.name)
