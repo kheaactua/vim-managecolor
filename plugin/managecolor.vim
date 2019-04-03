@@ -40,12 +40,22 @@ function! Build_colo_cache()
 	python cololib.cmd_build_cache(csdata, vim.eval('g:colo_search_path'))
 endfunction
 
+function! Strip(input_string)
+	let var = a:input_string
+
+	" Needed to remove leading line breaks
+	let var = substitute(var, '\n', '', '')
+
+	" Trim the rest of the whitespace
+	return substitute(var, '\v^\s*(.{-})\s*$','\1','')
+endfunction
+
 function! Get_random_colo(tag)
 	redir => out
 	silent! python cololib.cmd_get_random_colo(csdata, vim.eval('a:tag'))
 	redir END
 
-	let out = substitute(out, '^\s*\(.\{-}\)\s*$', '\1', '')
+	let out = Strip(out)
 
 	exec 'colo ' . out
 endfunction
