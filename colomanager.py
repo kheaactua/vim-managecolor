@@ -66,7 +66,6 @@ def main():
 
     if 'build_cache' == args.command[0]:
         cololib.cmd_build_cache(
-            # data=args.cache_file,
             data=data,
             search_path=default_bundles_location,
             verbose=args.verbose, dryrun=args.dryrun

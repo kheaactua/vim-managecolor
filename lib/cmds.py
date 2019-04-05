@@ -36,7 +36,12 @@ class CSData:
     def __init__(self, path, colorSchemes = [], caches={'all': [], 'whitelist': [], 'blacklist': []}):
         self.path = path
         self.colorSchemes = colorSchemes
-        self.caches        = caches
+
+        for t in 'all', 'whitelist', 'blacklist':
+            if t not in caches:
+                caches[t] = []
+
+        self.caches       = caches
 
     def has(self, name):
         """ Check if we have a colourscheme by 'name' """
@@ -207,7 +212,15 @@ def cmd_get_random_colo(data, tag=None, verbose=False):
         print('Tag %s is empty'%tag, file=sys.stderr)
         print('default')
         return
-    print(random.choice(data.caches[tag]))
+
+    name = random.choice(data.caches[tag])
+    if 'all' == tag:
+        safety = 10
+        while safety > 0:
+            if name not in data.caches['blacklist']:
+                break;
+            safety = safety - 1;
+    print(name)
 
 def _write_output(data, verbose=False, dryrun=False):
     """ Little helper function to output if dryrun and verbose are right """
