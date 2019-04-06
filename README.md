@@ -71,6 +71,7 @@ python colomanager.py --help
 ## TODO
 
 - [ ] Command to tag current whitespace and write to the cache
+- [ ] Implement log of recently used colour schemes
 
 
 ## License
