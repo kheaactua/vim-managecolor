@@ -41,7 +41,7 @@ class CSData:
             if t not in caches:
                 caches[t] = []
 
-        self.caches       = caches
+        self.caches = caches
 
     def has(self, name):
         """ Check if we have a colourscheme by 'name' """
@@ -201,25 +201,36 @@ def cmd_load_data(cache_file_path, verbose=False):
 
 def cmd_get_random_colo(data, tag=None, verbose=False):
     """ Randomely select a colour scheme """
+
+    # Ensure a tag is specified
     if not tag:
         tag = 'all'
 
+    # Cannot select from blacklist
+    if 'blacklist' == tag:
+        print('Cannot select from blacklist', file=sys.stderr)
+        print('default')
+        return
+
+    # Make sure the specified tag exists
     if tag not in data.caches:
         print('No such tag', file=sys.stderr)
         print('default')
         return
+
+    # Cannot select from a tab that doesn't have colour schemes
     if not data.caches[tag]:
         print('Tag %s is empty'%tag, file=sys.stderr)
         print('default')
         return
 
     name = random.choice(data.caches[tag])
-    if 'all' == tag:
-        safety = 10
-        while safety > 0:
-            if name not in data.caches['blacklist']:
-                break;
-            safety = safety - 1;
+    safety = 10 # Magic number to protect against infinite loops
+    while safety > 0:
+        if name not in data.caches['blacklist']:
+            break
+        name = random.choice(data.caches[tag])
+        safety = safety - 1;
     print(name)
 
 def _write_output(data, verbose=False, dryrun=False):
