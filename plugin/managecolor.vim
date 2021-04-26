@@ -18,7 +18,7 @@ if !exists('g:colo_search_path')
 endif
 
 " Load out module
-python << EOF
+python3 << EOF
 
 import os
 import sys
@@ -37,7 +37,7 @@ EOF
 
 
 function! Build_colo_cache()
-	python cololib.cmd_build_cache(csdata, vim.eval('g:colo_search_path'))
+	python3 cololib.cmd_build_cache(csdata, vim.eval('g:colo_search_path'))
 endfunction
 
 function! Strip(input_string)
@@ -52,7 +52,7 @@ endfunction
 
 function! Get_random_colo(tag)
 	redir => out
-	silent! python cololib.cmd_get_random_colo(csdata, vim.eval('a:tag'))
+	silent! python3 cololib.cmd_get_random_colo(csdata, vim.eval('a:tag'))
 	redir END
 
 	let out = Strip(out)
@@ -61,7 +61,7 @@ function! Get_random_colo(tag)
 endfunction
 
 function! Testme()
-	python print("cache = %s"%my_var)
+	python3 print("cache = %s"%my_var)
 endfunction
 
 
