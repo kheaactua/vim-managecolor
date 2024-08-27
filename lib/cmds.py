@@ -129,7 +129,7 @@ def cmd_build_cache(data, search_path, verbose=True, dryrun=False):
     def path_to_scheme(path):
         """ Convert the file name to a colour scheme name """
         path = path.strip()
-        path = re.sub('\.vim$', '', os.path.basename(path))
+        path = re.sub(r'\.vim$', '', os.path.basename(path))
         return path
 
     # Collect all the files in the paths
