@@ -43,7 +43,7 @@ function M.setup(user_config)
   vim.keymap.set("n", "<Leader>rcs", "<Cmd>RandomColo<CR>", { noremap = true, silent = true, desc = "Random Colorscheme" })
   vim.keymap.set("n", "<Leader>wcs", "<Cmd>WhitelistColo<CR>", { noremap = true, silent = true, desc = "Random Whitelist Colorscheme" })
 
-  vim.notify("managecolor.nvim loaded and configured!", vim.log.levels.INFO)
+  -- vim.notify("managecolor.nvim loaded and configured!", vim.log.levels.INFO)
 end
 
 return M
